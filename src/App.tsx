@@ -1,24 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
+import List from "./components/list/List";
+
+interface Sub {
+  nick: string
+  subMonths: number
+  avatar: string
+  description?: string
+}
+
+interface AppStates {
+  subs: Array<Sub>
+  subsNumber: number 
+}
+
+
+
+const INITIAL_STATE = [{
+  nick: "sid",
+  subMonths: 3,
+  avatar: "https://i.pravatar.cc/150?u=sid",
+  description: "Sid hace de mod a veces"
+},
+{
+  nick: "sergio",
+  subMonths: 7,
+  avatar: "https://i.pravatar.cc/150?u=aergio"
+} ]
 
 function App() {
+  const [subs, setSubs] = useState<AppStates["subs"]>([]);
+  const [newSubsNumber, setNewSubsNumber] = useState<AppStates["subsNumber"]>(0)
+
+  useEffect(() => {
+    setSubs(INITIAL_STATE)
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Mis subs</h1>
+      <List subs={subs}/>
     </div>
   );
 }
